@@ -1,0 +1,193 @@
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-6">
+    <h1>{{title}}</h1>
+    <h2>{{error}}</h2>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4 opaque1">
+        <h2>Crea un entrenador</h2>
+        <form class="animated bounceIn" (ngSubmit)="crearEntrenador(NuevaEntrenadorForm)" #NuevaEntrenadorForm="ngForm">
+
+          <div class="form-group">
+            <label>Nombres</label>
+            <input type="text" class="form-control" placeholder="Ingrese su nombre" [(ngModel)]="nuevaEntrenador.nombre" name="nombre">
+          </div>
+
+          <div class="form-group">
+            <label>Fecha inicio</label>
+            <input type="date" class="form-control" id="datePicker" [(ngModel)]="nuevaEntrenador.fechaInicio" name="fechaInicio">
+          </div>
+          <div class="form-group">
+            <label>Region</label>
+            <select class="form-control" id="exampleSelect1" [(ngModel)]="nuevaEntrenador.region" name="region">
+              <option>Alola</option>
+              <option>Johto</option>
+              <option>Kanto</option>
+              <option>Hoenn</option>
+              <option>Teselia</option>
+              <option>Sinnoh</option>
+              <option>Kalos</option>
+              <option>Islas</option>
+              <option>Sete</option>
+            </select>
+          </div>
+          <button  [disabled]="disabledButtons.NuevaEntrenadorFormSubmitButton||!NuevaEntrenadorForm.valid" type="submit"
+                  class="btn btn-block btn-success">Crear
+          </button>
+
+        </form>
+        <br>
+      </div>
+      <div class="col-sm-4">
+        <h1>{{nuevaEntrenador.nombre}}</h1>
+        <h1>{{nuevaEntrenador.fechaInicio}}</h1>
+        <h1>{{nuevaEntrenador.region}}</h1>
+      </div>
+    </div>
+
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-6" style="color: white">
+    <h1>Lista de Entrenadores</h1>
+  </div>
+  <div class="col-sm-2">
+
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-6" style="color: white">
+    <p>Aqui se listan todos los entrenadores del sistema de pokemon.</p>
+  </div>
+
+  <div class="col-sm-4"></div>
+</div>
+<br>
+
+
+<div class="col-sm-12 animated flipInX"  *ngFor="let entrenador of entrenadores">
+  <div>
+    <div class="row" >
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8 opaque1">
+        <div class="row ma-margen-top-bottom">
+          <div class="col-sm-1">
+            ID: {{entrenador.id}}
+          </div>
+          <div class="col-sm-4">
+            <div class="text-center ma-borde ma-padding-top-bottom">
+              <h1> {{entrenador.nombre}} </h1>
+            </div>
+          </div>
+          <div class="col-sm-5 text-center">
+            <div class="text-center ma-borde" style="margin-top: 10px;">
+              <p>
+                {{entrenador.nombre}}
+              </p>
+              <p>
+                {{entrenador.region}}
+              </p>
+              <p>
+                {{entrenador.fechaInicio}}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-2 text-center">
+            <br>
+            <a (click)="borrarEntrenador(entrenador.id)" class="btn btn-danger btn-block">X</a>
+            <a (click)="entrenador.formularioCerrado = !entrenador.formularioCerrado" class="btn btn-info btn-block">Edit</a>
+            <br>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <a class="btn btn-default btn-block" [routerLink]="[entrenador.id,'pokemon']">Ir a Pokémons</a>
+            <br>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+    <br>
+  </div>
+  <br>
+
+  <div class="div"  [hidden]="entrenador.formularioCerrado">
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-6" style="color: white">
+        <h1>Editar Entrenador  - {{entrenador.nombre}} </h1>
+      </div>
+      <div class="col-sm-2">
+
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4 opaque1">
+        <br>
+        <form class="animated bounceIn" (ngSubmit)="actualizarEntrenador(entrenador)" #NuevaEntrenadorForm2="ngForm">
+          <div class="form-group">
+            <label>Nombres</label>
+            <input type="text" class="form-control" placeholder="Ingrese sus Nombres" name="nombres" [(ngModel)]="entrenador.nombre"
+                   #nombre="ngModel"
+                   #nombreElm>
+          </div>
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" class="form-control" placeholder="Ingrese su fecha de inicio:" name="fechaInicio" [(ngModel)]="entrenador.fechaInicio">
+          </div>
+          <div class="form-group">
+            <label>Region</label>
+            <select class="form-control" [(ngModel)]="entrenador.region" name="region">
+              <option>Alola</option>
+              <option>Johto</option>
+              <option>Kanto</option>
+              <option>Hoenn</option>
+              <option>Teselia</option>
+              <option>Sinnoh</option>
+              <option>Kalos</option>
+              <option>Islas</option>
+              <option>Sete</option>
+            </select>
+          </div>
+
+          <input type="hidden" name="idEntrenador" value=" {{entrenador.id}}">
+          <button type="submit" class="btn btn-block btn-success"
+                  [disabled]="disabledButtons.NuevaEntrenadorFormSubmitButton||!NuevaEntrenadorForm2.valid"
+          >Editar Entrenador :)</button>
+          <button type="button"
+                  class="btn btn-block btn-warning"
+                  (click)="entrenador.formularioCerrado = !entrenador.formularioCerrado"
+          >
+            Cancelar
+          </button>
+
+        </form>
+        <br>
+      </div>
+      <div class="col-sm-4"></div>
+
+    </div>
+
+
+
+  </div>
+  <br>
+</div>
+
+
